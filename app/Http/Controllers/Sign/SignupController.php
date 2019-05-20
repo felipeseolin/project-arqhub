@@ -22,7 +22,7 @@ class SignupController extends Controller
      */
     public function index()
     {
-        return view('signup');
+        return view('Sign.signup');
     }
 
     /**
@@ -43,7 +43,7 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        $dataForm = $request->except(['_token', 'password-confirm']);
+        $dataForm = $request->except(['_token', 'password-confirm', 'agree']);
         
         $insert = $this->user->insert($dataForm);
         

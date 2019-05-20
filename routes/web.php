@@ -17,6 +17,10 @@ Route::get('/home', function () {
 
 Route::resource('/signup', 'Sign\SignupController');
 
+Route::get('/info', function () {
+	return view('info');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

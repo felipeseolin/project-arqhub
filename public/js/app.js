@@ -49437,8 +49437,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/seolin/Documentos/project-arqhub/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/seolin/Documentos/project-arqhub/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projetos Pessoais\project-arqhub\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projetos Pessoais\project-arqhub\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

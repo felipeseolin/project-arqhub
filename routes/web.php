@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/signup', function () {
-    return view('signup');
+Route::get('/home', function () {
+	return 'Você está logado!';
 });
+
+Route::resource('/signup', 'Sign\SignupController');
 
 Route::get('/', function () {
     return view('welcome');

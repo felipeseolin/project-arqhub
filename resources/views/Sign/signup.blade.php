@@ -10,6 +10,14 @@
             se inscrever em nosso site.
         </p>
 
+        @if(isset($errors) && count($errors) > 0)
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <p>{{$error}}</p>
+                @endforeach
+            </div>
+        @endif
+
         <form class="form" method="post" action="{{route('signup.store')}}">
             {!! csrf_field() !!}
 

@@ -37,4 +37,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public $rules = [
+	    'fname' => 'required|min:3|max:250',
+	    'lname' => 'required|min:5|max:250',
+	    'birth' => 'required',
+	    'email' => 'required',
+	    'bio' => 'required',
+    ];
+    
+    public $messages = [
+    	'fname.required' => 'O campo nome é de preenchimento obrigatório',
+    	'lname.required' => 'O campo sobrenome é de preenchimento obrigatório',
+    	'birth.required' => 'O campo data de nascimento é de preenchimento obrigatório',
+    	'email.required' => 'O campo email é de preenchimento obrigatório',
+    	'password.required' => 'O campo senha é de preenchimento obrigatório',
+    	'phone.numeric' => 'O campo telefone deve ser preenchido com apenas números',
+    ];
 }

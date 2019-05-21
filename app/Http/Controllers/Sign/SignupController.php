@@ -43,7 +43,22 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        $dataForm = $request->except(['_token', 'password-confirm', 'agree']);
+    	$allData = $request->all();
+	    $dataForm = $request->except(['_token', 'password-confirm', 'agree']);
+    	
+    	$errorMessages = '';
+    	if ($allData['password'] != $allData['password-confirm']) {
+    		$errorMessages = 'As senhas informadas não conferem';
+	    }
+//    	if ($allData['agree'] != true) {
+//    		$errorMessages .= 'É necessário confordar com nossas políticas para se registrar';
+//	    }
+    	
+    	$validate = validator($dataForm, $this->user->rules, $this->user->messages);
+    	
+    	if (strlen($errorMessages) > 0) {
+    		return redirect()->back()->withErrors($validate)->withInput();
+	    }
         
         $insert = $this->user->insert($dataForm);
         

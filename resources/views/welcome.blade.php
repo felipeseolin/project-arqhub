@@ -85,8 +85,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{url('signup')}}">Sign up</a>
-                    <a href="{{url('signin')}}">Sign in</a>
+                    <a href="{{url('register')}}">Sign up</a>
+                    <a href="{{url('login')}}">Sign in</a>
                     <a href="{{url('info')}}">Info</a>
                 </div>
             </div>

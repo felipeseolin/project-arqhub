@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/user', 'User\UserController@edit');
+Route::post('/user', 'User\UserController@update');
+
 Route::get('/home', function () {
 	return 'Você está logado!';
 });

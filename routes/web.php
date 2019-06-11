@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/user', 'User\UserController@edit');
-Route::post('/user', 'User\UserController@update');
+Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
+Route::put('/user', 'User\UserController@update')->middleware('auth');
 
 Route::get('/home', function () {
 	return 'Você está logado!';

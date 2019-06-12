@@ -16,13 +16,15 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('description');
-            $table->date('date');
+            $table->text('description')->nullable();
             $table->decimal('area');
             $table->integer('num_bedrooms');
             $table->integer('num_bathrooms');
             $table->integer('num_floors');
             $table->integer('num_parking');
+            $table->integer('num_suites');
+            $table->decimal('width');
+            $table->decimal('length');
 	        $table->unsignedBigInteger('user_id');
             $table->timestamps();
 	

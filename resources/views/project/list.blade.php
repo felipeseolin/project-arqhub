@@ -7,6 +7,8 @@
         <h1>Projetos Gerais</h1>
         <p>Alguma descrição do que fazer</p>
 
+        <a class="btn btn-success" href="{{route("project.create")}}">Novo projeto</a>
+
         <table class="table table-striped">
             <tr>
                 <th>Nome</th>

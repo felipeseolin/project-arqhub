@@ -25,7 +25,7 @@ class ProjectController extends Controller {
 		$projects = $this->project->paginate($this->totalByPages);
 		
 		foreach ($projects as $project) {
-			$project->canEdit = Auth::user()->id == $project->id;
+			$project->canEdit = Auth::user()->id == $project->user_id;
 		}
 		
 		$userName = Auth::user()->name;
@@ -55,8 +55,7 @@ class ProjectController extends Controller {
 		// Insere no banco de dados
 		$insert = $this->project->insert($dataForm);
 		
-		$title = "Projetos";
-		return view("project.list", compact('title'));
+		return redirect()->route("project.index");
 	}
 	
 	/**

@@ -11,6 +11,8 @@
 |
 */
 
+Route::resource('/project', 'ProjectController')->middleware('auth');
+
 Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
 Route::put('/user', 'User\UserController@update')->middleware('auth');
 

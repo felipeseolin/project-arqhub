@@ -23,6 +23,17 @@
             </div>
 
             <div class="form-group">
+                <label for="category">Categoria</label>
+                <select id="category" name="category" class="form-control" required>
+                    @foreach($categories as $category)
+                        <option id="{{$category}}" name="{{$category}}" value="{{ $category }}"
+                                {{ $category == $project->category ? "selected" : "" }}
+                        >{{ $category }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="description">Descrição</label>
                 <textarea id="description" name="description" class="form-control" rows="5">{{$project->description}}
                 </textarea>

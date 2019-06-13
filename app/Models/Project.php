@@ -19,6 +19,7 @@ class Project extends Model
 	    'num_suites',
 	    'width',
 	    'length',
+	    'category',
 	    'user_id'
     ];
     

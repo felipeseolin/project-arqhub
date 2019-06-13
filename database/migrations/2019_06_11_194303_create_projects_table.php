@@ -25,6 +25,7 @@ class CreateProjectsTable extends Migration
             $table->integer('num_suites');
             $table->decimal('width');
             $table->decimal('length');
+            $table->enum('category', ['tradicional', 'praia', 'campo', 'edicula']);
 	        $table->unsignedBigInteger('user_id');
             $table->timestamps();
 	

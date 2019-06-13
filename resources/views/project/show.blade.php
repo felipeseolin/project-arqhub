@@ -19,6 +19,7 @@
             <li>Suítes: {{$project->num_suites}}</li>
             <li>Largura: {{$project->width}}</li>
             <li>Comprimento: {{$project->length}}</li>
+            <li>Categoria: {{$project->category}}</li>
             <li>Usuário que cadastrou: {{$userName}}</li>
         </ul>
     </section>

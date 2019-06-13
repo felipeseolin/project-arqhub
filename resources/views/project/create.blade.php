@@ -61,6 +61,15 @@
                 <input id="length" name="length" class="form-control" type="number" min="0" required>
             </div>
 
+            <div class="form-group">
+                <label for="category">Categoria</label>
+                <select id="category" name="category" class="form-control" required>
+                    @foreach($categories as $category)
+                        <option value="{{ $category }}">{{ $category }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button id="submit" class="btn btn-success" type="submit">Salvar</button>
         </form>
     </section>

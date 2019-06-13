@@ -11,6 +11,7 @@ class ProjectController extends Controller {
 	private $project;
 	private $totalByPages = 15;
 	
+	
 	public function __construct (Project $project) {
 		$this->project = $project;
 	}
@@ -39,8 +40,9 @@ class ProjectController extends Controller {
 	 */
 	public function create () {
 		$title = "Novo projeto";
+		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
 		
-		return view("project.create", compact('title'));
+		return view("project.create", compact('title', 'categories'));
 	}
 	
 	/**
@@ -81,8 +83,9 @@ class ProjectController extends Controller {
 	public function edit ($id) {
 		$project = $this->project->find($id);
 		$title = $project->name;
+		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
 		
-		return view("project.edit", compact('title', 'project'));
+		return view("project.edit", compact('title', 'project', 'categories'));
 	}
 	
 	/**
@@ -97,9 +100,7 @@ class ProjectController extends Controller {
 		
 		$update = $project->update($dataForm);
 		
-		$msg = $update ? "Projeto atualizado com sucesso" : "Não foi possível atualizar o projeto";
-		
-		return view("project.edit", compact('title', 'project', 'msg', 'update'));
+		return redirect()->route("project.index");
 	}
 	
 	/**

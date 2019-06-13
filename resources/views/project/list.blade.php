@@ -20,6 +20,7 @@
                 <th>Numero suítes</th>
                 <th>Largura</th>
                 <th>Comprimento</th>
+                <th>Categoria</th>
                 <th>Usuário</th>
                 <th width="100px">Ações</th>
             </tr>
@@ -34,6 +35,7 @@
                     <td>{{$project->num_suites}}</td>
                     <td>{{$project->width}}</td>
                     <td>{{$project->length}}</td>
+                    <td>{{$project->category}}</td>
                     <td>{{$userName}}</td>
                     <td>
                         <a class="btn btn-info" href="{{route("project.show", $project->id)}}">Visualizar</a>

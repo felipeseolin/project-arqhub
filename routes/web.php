@@ -16,6 +16,9 @@ Route::resource('/project', 'ProjectController')->middleware('auth');
 Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
 Route::put('/user', 'User\UserController@update')->middleware('auth');
 
+Route::get('/user/{id}', 'User\UserController@show');
+Route::post('/user/{id}', 'User\UserController@sendEmail');
+
 Route::get('/home', function () {
 	return 'Você está logado!';
 });

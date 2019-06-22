@@ -11,6 +11,13 @@
 |
 */
 
+Route::get('/projects', 'ProjectController@listar');
+Route::get('/project/id/{id}', 'ProjectController@show');
+Route::get('/projects/{param1}-{value1}', 'ProjectController@oneParam');
+Route::get('/projects/{param1}-{value1}/{param2}-{value2}', 'ProjectController@twoParam');
+Route::get('/projects/{param1}-{value1}/{param2}-{value2}/{param3}-{value3}', 'ProjectController@threeParam');
+Route::get('/projects/{param1}-{value1}/{param2}-{value2}/{param3}-{value3}/{param4}-{value4}', 'ProjectController@fourParam');
+
 Route::resource('/project', 'ProjectController')->middleware('auth');
 
 Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
@@ -32,14 +39,6 @@ Route::get('/info', function () {
 
 Route::get('/', function () {
     return view('index');
-});
-
-Route::get('/projects', function () {
-    return view('projects');
-});
-
-Route::get('/projects', function () {
-    return view('projects');
 });
 
 Auth::routes(['verify' => true]);

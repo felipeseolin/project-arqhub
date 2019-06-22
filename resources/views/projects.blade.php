@@ -21,10 +21,10 @@
                         quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt
                         voluptate. Voluptatum.
                     </p>
-                    <a class="btn btn-secondary btn-lg" href="#">Categoria 1</a>
-                    <a class="btn btn-secondary btn-lg" href="#">Categoria 2</a>
-                    <a class="btn btn-secondary btn-lg" href="#">Categoria 3</a>
-                    <a class="btn btn-secondary btn-lg" href="#">Categoria 4</a>
+                    <a class="btn btn-secondary btn-lg" href="#">Casas Tradicionais</a>
+                    <a class="btn btn-secondary btn-lg" href="#">Casas de Praia</a>
+                    <a class="btn btn-secondary btn-lg" href="#">Casas de Campo</a>
+                    <a class="btn btn-secondary btn-lg" href="#">Edícula</a>
                 </div>
                 <div class="col-md-4 mb-5">
                     <h2>Filtrar</h2>
@@ -56,7 +56,7 @@
         <!-- Page Features -->
             <hr />
             <div class="row text-center">
-                <!-- card -->
+                
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card h-100">
                         <img

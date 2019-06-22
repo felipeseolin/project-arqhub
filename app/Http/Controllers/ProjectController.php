@@ -20,6 +20,46 @@ class ProjectController extends Controller {
 	 * Display a listing of the resource.
 	 * @return \Illuminate\Http\Response
 	 */
+	public function listar() {
+		$projects = Project::all();
+		$param1 = null;
+		$param2 = null;
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function oneParam($param1, $value1) {
+		$projects = Project::where([[$param1, '=', $value1]])->get();
+		$param2 = null;
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function twoParam($param1, $value1, $param2, $value2) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->get();
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function threeParam($param1, $value1, $param2, $value2, $param3, $value3) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3]])->get();
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3], [$param4, '=', $value4]])->get();
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function detalhes ($id) {
+		$project = $this->project->find($id);
+		return view("project.show")->with('project', $project );
+	}
+
 	public function index () {
 		$title = "Projetos";
 		
@@ -71,7 +111,7 @@ class ProjectController extends Controller {
 		$userName = $user->find($project->user_id)->name;
 		
 		$title = "Projeto " . $project->name;
-		
+
 		return view("project.show", compact('project', 'title', 'userName'));
 	}
 	

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{url('/')}}">
             Project ArqHub
@@ -15,7 +15,10 @@
                     <a class="nav-link" href="{{url('/')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('info')}}">About</a>
+                    <a class="nav-link" href="{{url('projects')}}">Projetos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('info')}}">Sobre</a>
                 </li>
             </ul>
 
@@ -28,7 +31,7 @@
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Criar conta') }}</a>
                         </li>
                     @endif
                 @else

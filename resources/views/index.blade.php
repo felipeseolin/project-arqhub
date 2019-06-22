@@ -10,7 +10,7 @@
       <h1 class="jumbotron-heading"><i><b>Arq</i>Hub</b></h1>
       <p class="lead text-muted">Do consequat exercitation pariatur proident sint sit. Nisi dolor sit velit magna fugiat amet officia nostrud non officia culpa Lorem.</p>
       <p>
-        <a href="#" class="btn btn-secondary my-2">Ver Projetos</a>
+        <a href="projects" class="btn btn-secondary my-2">Ver Projetos</a>
       </p>
     </div>
   </section>

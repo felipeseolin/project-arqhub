@@ -16,6 +16,10 @@ Route::resource('/project', 'ProjectController')->middleware('auth');
 Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
 Route::put('/user', 'User\UserController@update')->middleware('auth');
 
+Route::get('/userpage', function () {
+	return view('user.user');
+});
+
 Route::get('/home', function () {
 	return 'Você está logado!';
 });
@@ -28,6 +32,14 @@ Route::get('/info', function () {
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::get('/projects', function () {
+    return view('projects');
+});
+
+Route::get('/projects', function () {
+    return view('projects');
 });
 
 Auth::routes(['verify' => true]);

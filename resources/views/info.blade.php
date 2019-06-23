@@ -14,7 +14,7 @@
         <div class='border'>
         <h2 class="text-center font-weight-bold">Alunos</h2>
         
-            <p class="text-center font-italic list-style-type-none">Elian Marcos Veloso</p>
+            <p class="text-center font-italic ">Elian Marcos Veloso</p>
             <p class="text-center font-italic">Felipe Seolin Bento</p>
             <p class="text-center font-italic">Rafael Fernandes Marques</p>
             <p class="text-center font-italic">Wirlley Oliveira Delfino</p>

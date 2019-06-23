@@ -56,22 +56,22 @@
         <img class="mx-auto d-block" src="http://placehold.it/900x400" alt="Second slide">
         <hr />
         <h2>Envie uma mensagem para o projetista</h2>
-        <form>
+        <form action="https://formspree.io/{{$userEmail}}" method="POST">
             <div class="row">
                 <div class="col">
                     <label for="name">Nome</label>
-                    <input id="name" type="text" class="form-control">
+                    <input name="Nome" id="name" type="text" class="form-control">
                 </div>
                 <div class="col">
                     <label for="name">Email</label>
-                    <input id="email" type="email" class="form-control">
+                    <input name="Email" id="email" type="email" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Mensagem</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea name="Mensagem" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-            <button type="submit" class="btn btn-secondary btn-block">Enviar</button>
+            <button value="Submit" type="submit" class="btn btn-secondary btn-block">Enviar</button>
         </form>
         <hr />
     </section>

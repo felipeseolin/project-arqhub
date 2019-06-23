@@ -109,10 +109,11 @@ class ProjectController extends Controller {
 		$project = $this->project->find($id);
 		$user = new User();
 		$userName = $user->find($project->user_id)->name;
+		$userEmail = $user->find($project->user_id)->email;
 		
 		$title = "Projeto " . $project->name;
 
-		return view("project.show", compact('project', 'title', 'userName'));
+		return view("project.show", compact('project', 'title', 'userName', "userEmail"));
 	}
 	
 	/**

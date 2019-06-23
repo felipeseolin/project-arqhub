@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title ?? 'Project ArqHub'}}</title>
     <link rel="stylesheet" href="/css/app.css">
+
     @stack('style')
 </head>
 <body>

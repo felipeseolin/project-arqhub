@@ -104,14 +104,13 @@
             </div>
             </div>
 
-           
+            <button id="submit" class="btn btn-success btn-lg" type="submit">Salvar</button>
             
         </form>
     </section>
     
-    <div class="container border">
-        <button id="submit" class="btn btn-success btn-lg" type="submit">Salvar</button>
+       
     
-    </div>
+    
     
 @endsection

@@ -2,15 +2,29 @@
 
 @section('content')
     @include('navbar')
-
+    
     <section id="user" class="container">
-        <h1>Editar minha informações</h1>
+    <div class="row justify-content-md-center">
+        <div class="col-sm-4 border">
+            <div>
+            <img src="../images/icon.svg" class="img-fluid" alt="Responsive image"/>
+            </div>
+            <h3 class="text-center">{{ Auth::user()->name }}</h3>
+            <h4 class="text-center">{{ Auth::user()->email }}</h4>
+            <h4 class="text-center">{{ Auth::user()->phone }}</h4>
 
+        </div>
+        
+        <div class="col col-lg-8 border">
+        <div class="border">
+        <h3 class="text-center font-weight-bold">PERFIL</h3>
+        <h4 class="text-center font-weight-normal">Altere suas informações</h4>
+        </div>
         <form id="form-active" action="" class="form" method="POST">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
             <input id="active" name="active" value="false" type="hidden">
-            <button class="btn btn-danger">Desativar a minha conta</button>
+          
         </form>
 
         <form id="form" class="form"  action="" method="POST">
@@ -55,7 +69,9 @@
 
 
             <button id="submit" class="btn btn-success" type="submit">Salvar</button>
+            <button class="btn btn-danger">Desativar a minha conta</button>
         </form>
-
+       
+        </div>
     </section>
 @endsection

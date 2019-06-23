@@ -94,7 +94,7 @@
                         <div class="card-footer">
                                 Tamanho: {{$project->width}} x {{$project->length}} m<br>
                                 Área: {{$project->area}} m²<br>
-                            <a href="project/id/{{$project->id}}" class="btn btn-outline-primary btn-block">VER</a>
+                            <a href="http://127.0.0.1:8000/project/id/{{$project->id}}" class="btn btn-outline-primary btn-block">VER</a>
                         </div>
                     </div>
                 </div>

@@ -7,18 +7,8 @@
     <div style="height: 20vh;"></div>
     <section class="jumbotron text-center">
     <div class="container">
-        <div class="card-body">
-            @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-            @endif
-                You are logged in!
-        </div>
-        <p class="lead text-muted">Bem-vindo ao</p>
-
       <h1 class="jumbotron-heading"><i><b>Arq</i>Hub</b></h1>
-      <p class="lead text-muted">A plataforma para divulgação do seu Portfólio</p>
+      <p class="lead text-muted">A plataforma para encontrar o projeto que mais se encaixa na sua construção e também para divulgar Portfólios</p>
       <p>
         <a href="projects" class="btn btn-secondary my-2">Ver Projetos</a>
       </p>
@@ -31,5 +21,3 @@
       
    
 @endsection
-
-

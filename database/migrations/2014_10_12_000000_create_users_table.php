@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration {
 				$table->date('birth')->nullable();
 				$table->integer('phone')->nullable();
 				$table->boolean('active')->default(true);
-				$table->string('photo')->nullable();
 				$table->text('bio')->nullable();
+				$table->string('picture')->nullable()->unique();
 				$table->rememberToken();
 				$table->timestamps();
 			});

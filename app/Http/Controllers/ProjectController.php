@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\ProjectImage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ProjectController extends Controller {
 	private $project;
 	private $totalByPages = 15;
-	
 	
 	public function __construct (Project $project) {
 		$this->project = $project;
@@ -20,18 +21,53 @@ class ProjectController extends Controller {
 	 * Display a listing of the resource.
 	 * @return \Illuminate\Http\Response
 	 */
+	public function listar() {
+//		$projects = Project::paginate(1);
+		$projects = Project::with('project_image')->paginate($this->totalByPages);
+		$param1 = null;
+		$param2 = null;
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function oneParam($param1, $value1) {
+		$projects = Project::where([[$param1, '=', $value1]])->paginate($this->totalByPages);
+		$param2 = null;
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function twoParam($param1, $value1, $param2, $value2) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->paginate($this->totalByPages);
+		$param3 = null;
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function threeParam($param1, $value1, $param2, $value2, $param3, $value3) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3]])->paginate($this->totalByPages);
+		$param4 = null;
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4) {
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3], [$param4, '=', $value4]])->paginate($this->totalByPages);
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+	}
+
+	public function detalhes ($id) {
+		$project = $this->project->find($id);
+		return view("project.show")->with('project', $project );
+	}
+
 	public function index () {
-		$title = "Projetos";
+		$title = "Meus Projetos";
 		
-		$projects = $this->project->paginate($this->totalByPages);
+		$projects = $this->project->where('user_id', '=', Auth::user()->id)->paginate($this->totalByPages);
 		
-		foreach ($projects as $project) {
-			$project->canEdit = Auth::user()->id == $project->user_id;
-		}
-		
-		$userName = Auth::user()->name;
-		
-		return view("project.list", compact('projects', 'title', 'userName'));
+		return view("project.list", compact('projects', 'title'));
 	}
 	
 	/**
@@ -51,11 +87,43 @@ class ProjectController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store (Request $request) {
-		$dataForm = $request->except(['_token']);
+		$dataForm = $request->except(['_token', 'images', 'images.*']);
 		// Adiciona o id do usuário autenticado como autor no projeto
 		$dataForm["user_id"] = Auth::user()->id;
-		// Insere no banco de dados
-		$insert = $this->project->insert($dataForm);
+		// Valida imagens
+		$this->validate($request, [
+			'images' => 'required',
+			'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+		]);
+		// Insere os dados de projeto no banco de dados
+		$project = new Project();
+		$project->name = $dataForm['name'];
+		$project->description = $dataForm['description'];
+		$project->area = $dataForm['area'];
+		$project->num_bedrooms = $dataForm['num_bedrooms'];
+		$project->num_bathrooms = $dataForm['num_bathrooms'];
+		$project->num_floors = $dataForm['num_floors'];
+		$project->num_parking = $dataForm['num_parking'];
+		$project->num_suites = $dataForm['num_suites'];
+		$project->width = $dataForm['width'];
+		$project->length = $dataForm['length'];
+		$project->category = $dataForm['category'];
+		$project->user_id = Auth::user()->id;
+		$project->save();
+		
+//		$insert = $this->project->insert($dataForm);
+		// Salva as imagens
+		if($files = $request->file('images')){
+			foreach($files as $file){
+				$name = time() . '.' . md5($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+				$file->move(public_path('images'), $name);
+				// Insere no banco as imagens;
+				$projectImages = new ProjectImage();
+				$projectImages->proj_id = $project->id;
+				$projectImages->img_name = $name;
+				$projectImages->save();
+			}
+		}
 		
 		return redirect()->route("project.index");
 	}
@@ -67,12 +135,13 @@ class ProjectController extends Controller {
 	 */
 	public function show ($id) {
 		$project = $this->project->find($id);
+		$images = ProjectImage::where('proj_id', '=', $project->id)->get();
 		$user = new User();
 		$userName = $user->find($project->user_id)->name;
+		$userEmail = $user->find($project->user_id)->email;
 		
 		$title = "Projeto " . $project->name;
-		
-		return view("project.show", compact('project', 'title', 'userName'));
+		return view("project.show", compact('project', 'title', 'userName', "userEmail", "images"));
 	}
 	
 	/**
@@ -83,6 +152,11 @@ class ProjectController extends Controller {
 	public function edit ($id) {
 		$project = $this->project->find($id);
 		$title = $project->name;
+		
+		if (Auth::user()->id != $project->user_id) {
+			return abort(404);
+		}
+		
 		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
 		
 		return view("project.edit", compact('title', 'project', 'categories'));
@@ -98,7 +172,38 @@ class ProjectController extends Controller {
 		$dataForm = $request->except(['_token']);
 		$project = $this->project->find($id);
 		
+		// Valida imagens
+		$this->validate($request, [
+			'images' => '',
+			'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+		]);
+		
 		$update = $project->update($dataForm);
+		
+		// Se houverem novas imagens
+		if($files = $request->file('images')){
+			// Exclui as imagens antigas
+			$images = ProjectImage::where('proj_id', '=', $project->id)->get();
+			foreach($images as $img) {
+				// Exclui do sistema de arquivos
+				$imgPath = public_path('images/') . $img->img_name;
+				if (File::exists($imgPath)) {
+					File::delete($imgPath);
+				}
+				// Exclui do banco
+				$img->delete();
+			}
+			// Salva as novas imagens
+			foreach($files as $file){
+				$name = time() . '.' . md5($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+				$file->move(public_path('images'), $name);
+				// Insere no banco as imagens;
+				$projectImages = new ProjectImage();
+				$projectImages->proj_id = $project->id;
+				$projectImages->img_name = $name;
+				$projectImages->save();
+			}
+		}
 		
 		return redirect()->route("project.index");
 	}

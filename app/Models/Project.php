@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -34,4 +35,12 @@ class Project extends Model
         'width' => 'required',
         'length' => 'required'
     ];
+    
+    public function project_image() {
+    	return $this->hasMany(ProjectImage::class, 'proj_id', 'id');
+    }
+	
+	public function user() {
+		return $this->belongsTo(User::class, 'user_id', 'id');
+	}
 }

@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
         <a class="navbar-brand" href="{{url('/')}}">
             Project ArqHub
         </a>
@@ -15,8 +15,13 @@
                     <a class="nav-link" href="{{url('/')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('info')}}">About</a>
+                    <a class="nav-link" href="{{url('projects')}}">Projetos</a>
                 </li>
+                {{--
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/userpage')}}">Portfólio</a>
+                </li>
+                --}}
             </ul>
 
             {{-- Right Side of Navbar --}}
@@ -28,7 +33,7 @@
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Criar conta') }}</a>
                         </li>
                     @endif
                 @else
@@ -39,8 +44,9 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                             <a class="dropdown-item" href="{{ route('project.index') }}">
-                                Projetos
+                                Meus projetos
                             </a>
                             <a class="dropdown-item" href="{{ route('user') }}">
                                 Editar perfil

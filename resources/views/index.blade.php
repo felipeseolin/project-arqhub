@@ -8,7 +8,7 @@
     <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><i><b>Arq</i>Hub</b></h1>
-      <p class="lead text-muted">Do consequat exercitation pariatur proident sint sit. Nisi dolor sit velit magna fugiat amet officia nostrud non officia culpa Lorem.</p>
+      <p class="lead text-muted">A plataforma para encontrar o projeto que mais se encaixa na sua construção e também para divulgar Portfólios</p>
       <p>
         <a href="projects" class="btn btn-secondary my-2">Ver Projetos</a>
       </p>

@@ -28,8 +28,8 @@
               <li
                 data-target="#carouselExampleIndicators"
                 data-slide-to="0"
-                class=""
-              ></li>
+                class="">
+              </li>
               <li
                 data-target="#carouselExampleIndicators"
                 data-slide-to="1"

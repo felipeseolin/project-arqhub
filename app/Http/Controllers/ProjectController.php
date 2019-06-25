@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\ProjectImage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -91,11 +92,44 @@ class ProjectController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store (Request $request) {
-		$dataForm = $request->except(['_token']);
+		$dataForm = $request->except(['_token', 'images', 'images.*']);
 		// Adiciona o id do usuário autenticado como autor no projeto
 		$dataForm["user_id"] = Auth::user()->id;
-		// Insere no banco de dados
-		$insert = $this->project->insert($dataForm);
+		// Valida imagens
+		$this->validate($request, [
+			'images' => 'required',
+			'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+		]);
+		// Insere os dados de projeto no banco de dados
+		$project = new Project();
+		$project->name = $dataForm['name'];
+		$project->description = $dataForm['description'];
+		$project->area = $dataForm['area'];
+		$project->num_bedrooms = $dataForm['num_bedrooms'];
+		$project->num_bathrooms = $dataForm['num_bathrooms'];
+		$project->num_floors = $dataForm['num_floors'];
+		$project->num_parking = $dataForm['num_parking'];
+		$project->num_suites = $dataForm['num_suites'];
+		$project->width = $dataForm['width'];
+		$project->length = $dataForm['length'];
+		$project->category = $dataForm['category'];
+		$project->user_id = Auth::user()->id;
+		$project->save();
+		
+//		$insert = $this->project->insert($dataForm);
+//		dd($this->project->id);
+		// Salva as imagens
+		if($files = $request->file('images')){
+			foreach($files as $file){
+				$name = time() . '.' . $file->getClientOriginalName();
+				$file->move(public_path('images'), $name);
+				// Insere no banco as imagens;
+				$projectImages = new ProjectImage();
+				$projectImages->proj_id = $project->id;
+				$projectImages->img_name = $name;
+				$projectImages->save();
+			}
+		}
 		
 		return redirect()->route("project.index");
 	}

@@ -7,7 +7,7 @@
         <h1>Novo Projeto</h1>
         <p>Alguma descrição do que fazer</p>
 
-        <form action="{{route('project.store')}}" method="POST">
+        <form action="{{route('project.store')}}" method="POST" enctype="multipart/form-data">
             {!! csrf_field() !!}
 
             <div class="form-group">
@@ -68,6 +68,11 @@
                         <option value="{{ $category }}">{{ $category }}</option>
                     @endforeach
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="images">Imagens do projeto</label>
+                <input name="images[]" class="form-control" type="file" multiple="multiple" required>
             </div>
 
             <button id="submit" class="btn btn-success" type="submit">Salvar</button>

@@ -13,7 +13,6 @@ class ProjectController extends Controller {
 	private $project;
 	private $totalByPages = 15;
 	
-	
 	public function __construct (Project $project) {
 		$this->project = $project;
 	}
@@ -24,8 +23,7 @@ class ProjectController extends Controller {
 	 */
 	public function listar() {
 //		$projects = Project::paginate(1);
-		$projects = Project::with('project_image')->paginate(3);
-//		dd($projects->links());
+		$projects = Project::with('project_image')->paginate($this->totalByPages);
 		$param1 = null;
 		$param2 = null;
 		$param3 = null;
@@ -34,7 +32,7 @@ class ProjectController extends Controller {
 	}
 
 	public function oneParam($param1, $value1) {
-		$projects = Project::where([[$param1, '=', $value1]])->get();
+		$projects = Project::where([[$param1, '=', $value1]])->paginate($this->totalByPages);
 		$param2 = null;
 		$param3 = null;
 		$param4 = null;
@@ -42,20 +40,20 @@ class ProjectController extends Controller {
 	}
 
 	public function twoParam($param1, $value1, $param2, $value2) {
-		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->get();
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->paginate($this->totalByPages);
 		$param3 = null;
 		$param4 = null;
 		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
 	}
 
 	public function threeParam($param1, $value1, $param2, $value2, $param3, $value3) {
-		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3]])->get();
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3]])->paginate($this->totalByPages);
 		$param4 = null;
 		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
 	}
 
 	public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4) {
-		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3], [$param4, '=', $value4]])->get();
+		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3], [$param4, '=', $value4]])->paginate($this->totalByPages);
 		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
 	}
 

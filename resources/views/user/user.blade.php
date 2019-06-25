@@ -8,9 +8,12 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-lg-3">
-          <h2>[NOME USUARIO]</h2>
+          <h2>{{ $user->name }}</h2>
           <hr />
-          <h4>[DADOS]</h4>
+          <address>
+            <strong>{{ $user->bio }}</strong>
+            <br />{{ $user->email }}<br />
+          </address>
         </div>
 
         <!-- /.col-lg-3 -->
@@ -88,149 +91,31 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
+          @foreach($projects as $project)
+          <div class="col-lg-4 col-md-4 mb-4">
               <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item One</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
+                  <img
+                  class="card-img-top"
+                  src="http://placehold.it/500x325"
+                  alt=""
+                  />
+                  <div class="card-body">
+                      <h4 class="card-title">{{$project->name}}</h4>
+                      <p class="card-text">
+                          Pavimentos: {{$project->num_floors}}<br>
+                          Quartos: {{$project->num_bedrooms}}<br>
+                          Banheiros: {{$project->num_bathrooms}}<br>
+                          Vagas na garagem: {{$project->num_parking}}<br>
+                      </p>
+                  </div>
+                  <div class="card-footer">
+                          Tamanho: {{$project->width}} x {{$project->length}} m<br>
+                          Área: {{$project->area}} m²<br>
+                      <a href="http://127.0.0.1:8000/project/id/{{$project->id}}" class="btn btn-outline-primary btn-block">VER</a>
+                  </div>
               </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Two</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur! Lorem ipsum dolor sit amet.
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Three</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Four</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Five</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur! Lorem ipsum dolor sit amet.
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"
-                  ><img
-                    class="card-img-top"
-                    src="http://placehold.it/700x400"
-                    alt=""
-                /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Six</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">★ ★ ★ ★ ☆</small>
-                </div>
-              </div>
-            </div>
+          </div>
+          @endforeach
           </div>
           <!-- /.row -->
         </div>

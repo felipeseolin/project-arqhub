@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Mail\SendMail;
 use App\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,9 @@ class UserController extends Controller
 
         $title = $user->name;
 
-        return view('user.info', compact('user', 'title'));
+        $projects = Project::where("user_id", '=', $id)->get();
+
+        return view('user.user', compact('user', 'projects', 'title'));
     }
 
     public function sendEmail(Request $request, $id)

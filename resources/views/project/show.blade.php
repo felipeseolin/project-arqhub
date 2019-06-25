@@ -37,6 +37,15 @@
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-5">
                     <h1 class="font-weight-light">{{$project->name}}</h1>
+                    @if($project->category == 'tradicional')
+                        <strong>Casa tradicional</strong>
+                    @elseif($project->category == 'campo')
+                        <strong>Casa de campo</strong>
+                    @elseif($project->category == 'praia')
+                        <strong>Casa de praia</strong>
+                    @elseif($project->category == 'edicula')
+                        <strong>Edicula</strong>    
+                    @endif    
                     <p>{{$project->description}}</p>
                     <ul>
                         <li>Quartos: {{$project->num_bedrooms}}</li>
@@ -47,6 +56,7 @@
                         <li>Tamanho: {{$project->width}} x {{$project->length}} m</li>
                         <li>Área: {{$project->area}}</li>
                     </ul>
+                    <p><a href="http://127.0.0.1:8000/user/{{$project->user_id}}">Ver outros projetos do mesmo projetista</a></p>
                 </div>
                 <!-- /.col-md-4 -->
         </div>

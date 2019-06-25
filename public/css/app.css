@@ -511,8 +511,14 @@ mark,
 }
 
 .img-fluid {
-  max-width: 100%;
-  height: auto;
+  max-width: 240px;
+  height: 240px;
+  margin: 8px auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #d6d8d9;
+  border-radius: 50%;
 }
 
 .img-thumbnail {

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Mail\SendMail;
 use App\User;
 use App\Models\Project;
+use Faker\Provider\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -24,16 +26,35 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+	    //Desativar o usuário
+	    if ($request->all()['active'] == false) {
+		    return 'Seu usuário foi desativado';
+	    }
         $title = "Editar Usuário";
+        $name = null;
+	    // Trata a imagem
+	    $img = $request->file('picture');
+	    if ($img) {
+		    $this->validate($request, [
+			    'picture' => 'image|mimes:jpeg,png,jpg|max:2048'
+		    ]);
+		    $name = time() . '-' . md5($img->getClientOriginalName()) . '.' . $img->getClientOriginalExtension();
+		    $img->move(public_path('images/users'), $name);
+	    }
         // Recupera o item para editar
         $user = new User();
+	    $imgAntiga = $user->picture;
         $user = $user->find(Auth::user()->id);
 
         $update = $user->update($request->all());
-        //Desativar o usuário
-        if ($request->input('active')) {
-            return 'Seu usuário foi desativado';
-        }
+        // Atualiza a foto
+	    if ($update && $img) {
+		    $update = $user->update(array('picture' => $name));
+		    $imgPath = public_path('images/users') . $user->picture;
+		    if (file_exists($imgPath)) {
+			    unlink($imgPath);
+		    }
+	    }
 
         return view('user.edit', compact('title', 'user', 'update'));
     }
@@ -77,4 +98,5 @@ class UserController extends Controller
 
         return view('user.info', compact('user', 'title', 'msg', 'response'));
     }
+    
 }

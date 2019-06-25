@@ -15,7 +15,7 @@ class CreateProjectImagesTable extends Migration
     {
         Schema::create('project_images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('img_name');
+            $table->string('img_name')->unique();
             $table->unsignedBigInteger('proj_id');
             $table->timestamps();
 	

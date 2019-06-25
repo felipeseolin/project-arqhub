@@ -3,24 +3,16 @@
 @section('content')
 
     <div class="container-fluid" >
-    @include('navbar') 
-    
+    @include('navbar')
+
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-8 mb-5">
                     <h2>Projetos</h2>
                     <hr />
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt
-                        neque tempore recusandae animi soluta quasi? Asperiores rem dolore
-                        eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat
-                        explicabo, maiores!
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
-                        optio neque consectetur consequatur magni in nisi, natus beatae
-                        quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt
-                        voluptate. Voluptatum.
+                        Aqui estão listados os projetos disponíveis, filtre e encontre resultados
+                        melhores.
                     </p>
                     @if($param1 != 'category' && $param2 != 'category' && $param3 != 'category' && $param4 != 'category')
                         <a class="btn btn-dark btn-lg " href="{{url()->current()}}/category-tradicional">Casas Tradicionais</a>
@@ -79,8 +71,8 @@
                     <div class="card h-100">
                         <img
                         class="card-img-top"
-                        src="http://placehold.it/500x325"
-                        alt=""
+                        src="{{ url('/images') . '/' . $project->project_image[0]->img_name }}"
+                        alt="Imagem do projeto"
                         />
                         <div class="card-body">
                             <h4 class="card-title">{{$project->name}}</h4>
@@ -89,6 +81,7 @@
                                 Quartos: {{$project->num_bedrooms}}<br>
                                 Banheiros: {{$project->num_bathrooms}}<br>
                                 Vagas na garagem: {{$project->num_parking}}<br>
+                                Categoria: {{$project->category}}<br>
                             </p>
                         </div>
                         <div class="card-footer">
@@ -99,10 +92,11 @@
                     </div>
                 </div>
                 @endforeach
+{{--                {!! $projects->links() !!}--}}
                 <!-- card -->
             </div>
         </div>
     </div>
     @include('footer')
-    
+
 @endsection

@@ -5,9 +5,9 @@
 
     <section id="user" class="container">
         <div class="row justify-content-md-center">
-            <div class="col-sm-4 border">
-                <div style="background-image: url({{ url('/images/users/') . '/' . $user->picture ?? 'icon.svg' }});"
-                    class="img-fluid">
+            <div class="col-sm-4 ">
+                <div style="background-image: url({{'"'. url('/images/users/') . '/' . ($user->picture ?? 'icon.svg') . '"'}});"
+                    class="foto-perfil">
                 </div>
                 <h3 class="text-center">{{ Auth::user()->name }}</h3>
                 <h4 class="text-center">{{ Auth::user()->email }}</h4>
@@ -15,8 +15,8 @@
 
             </div>
 
-            <div class="col col-lg-8 border">
-                <div class="border">
+            <div class="col col-lg-8 ">
+                <div>
                     <h3 class="text-center">PERFIL</h3>
                     <h4 class="text-center">Altere suas informações</h4>
                 </div>

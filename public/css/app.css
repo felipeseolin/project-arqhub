@@ -510,7 +510,7 @@ mark,
   content: "\2014\A0";
 }
 
-.img-fluid {
+.foto-perfil {
   max-width: 240px;
   height: 240px;
   margin: 8px auto;
@@ -519,6 +519,11 @@ mark,
   background-repeat: no-repeat;
   background-color: #d6d8d9;
   border-radius: 50%;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
 .img-thumbnail {

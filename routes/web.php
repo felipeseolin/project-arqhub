@@ -26,7 +26,7 @@ Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth'
 Route::put('/user', 'User\UserController@update')->middleware('auth');
 
 Route::get('/userpage', function () {
-	return view('user.user');
+	return abort(404);
 });
 
 Route::get('/home', function () {

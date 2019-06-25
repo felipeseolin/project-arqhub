@@ -3,8 +3,8 @@
 @section('content')
     @include('navbar')
 
-    <section id="edit-project" class="container border">
-        <div class="border">
+    <section id="edit-project" class="container">
+        <div>
         <h1 class="text-center font-weight-bold">{{$project->name}}</h1>
         <p class="text-center font-italic">Aqui você irá editar as especificações do seu projeto, confira tudo antes de salvar...</p>
         </div>
@@ -14,7 +14,7 @@
                 {{ $msg }}
             </div>
         @endif
-        <form action="{{route('project.update', $project->id)}}" method="POST">
+        <form action="{{route('project.update', $project->id)}}" method="POST" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
 
@@ -29,6 +29,11 @@
                 <textarea id="description" name="description" class="form-control" rows="5">{{$project->description}}</textarea>
             </div>
 
+            <div class="form-group">
+                <label class="font-weight-bold" for="images">Novas Imagens</label>
+                <input name="images[]" class="form-control" type="file" multiple="multiple">
+                <p>* Quando novas imagens forem adicionadas as antigas serão apagadas.</p>
+            </div>
            
 
             <div class="form-row">
@@ -115,9 +120,7 @@
             
         </form>
     </section>
-    
-       
-    
-    
+
+    @include('footer')
     
 @endsection

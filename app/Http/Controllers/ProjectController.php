@@ -7,6 +7,7 @@ use App\Models\ProjectImage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ProjectController extends Controller {
 	private $project;
@@ -22,7 +23,9 @@ class ProjectController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function listar() {
-		$projects = Project::all();
+//		$projects = Project::paginate(1);
+		$projects = Project::with('project_image')->paginate(3);
+//		dd($projects->links());
 		$param1 = null;
 		$param2 = null;
 		$param3 = null;
@@ -62,17 +65,11 @@ class ProjectController extends Controller {
 	}
 
 	public function index () {
-		$title = "Projetos";
+		$title = "Meus Projetos";
 		
-		$projects = $this->project->paginate($this->totalByPages);
+		$projects = $this->project->where('user_id', '=', Auth::user()->id)->paginate($this->totalByPages);
 		
-		foreach ($projects as $project) {
-			$project->canEdit = Auth::user()->id == $project->user_id;
-		}
-		
-		$userName = Auth::user()->name;
-		
-		return view("project.list", compact('projects', 'title', 'userName'));
+		return view("project.list", compact('projects', 'title'));
 	}
 	
 	/**
@@ -117,11 +114,10 @@ class ProjectController extends Controller {
 		$project->save();
 		
 //		$insert = $this->project->insert($dataForm);
-//		dd($this->project->id);
 		// Salva as imagens
 		if($files = $request->file('images')){
 			foreach($files as $file){
-				$name = time() . '.' . $file->getClientOriginalName();
+				$name = time() . '.' . md5($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
 				$file->move(public_path('images'), $name);
 				// Insere no banco as imagens;
 				$projectImages = new ProjectImage();
@@ -141,13 +137,13 @@ class ProjectController extends Controller {
 	 */
 	public function show ($id) {
 		$project = $this->project->find($id);
+		$images = ProjectImage::where('proj_id', '=', $project->id)->get();
 		$user = new User();
 		$userName = $user->find($project->user_id)->name;
 		$userEmail = $user->find($project->user_id)->email;
 		
 		$title = "Projeto " . $project->name;
-
-		return view("project.show", compact('project', 'title', 'userName', "userEmail"));
+		return view("project.show", compact('project', 'title', 'userName', "userEmail", "images"));
 	}
 	
 	/**
@@ -158,6 +154,11 @@ class ProjectController extends Controller {
 	public function edit ($id) {
 		$project = $this->project->find($id);
 		$title = $project->name;
+		
+		if (Auth::user()->id != $project->user_id) {
+			return abort(404);
+		}
+		
 		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
 		
 		return view("project.edit", compact('title', 'project', 'categories'));
@@ -173,7 +174,38 @@ class ProjectController extends Controller {
 		$dataForm = $request->except(['_token']);
 		$project = $this->project->find($id);
 		
+		// Valida imagens
+		$this->validate($request, [
+			'images' => '',
+			'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+		]);
+		
 		$update = $project->update($dataForm);
+		
+		// Se houverem novas imagens
+		if($files = $request->file('images')){
+			// Exclui as imagens antigas
+			$images = ProjectImage::where('proj_id', '=', $project->id)->get();
+			foreach($images as $img) {
+				// Exclui do sistema de arquivos
+				$imgPath = public_path('images/') . $img->img_name;
+				if (File::exists($imgPath)) {
+					File::delete($imgPath);
+				}
+				// Exclui do banco
+				$img->delete();
+			}
+			// Salva as novas imagens
+			foreach($files as $file){
+				$name = time() . '.' . md5($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+				$file->move(public_path('images'), $name);
+				// Insere no banco as imagens;
+				$projectImages = new ProjectImage();
+				$projectImages->proj_id = $project->id;
+				$projectImages->img_name = $name;
+				$projectImages->save();
+			}
+		}
 		
 		return redirect()->route("project.index");
 	}

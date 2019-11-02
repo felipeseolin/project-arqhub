@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="/css/app.css">
     @stack('style')
 </head>
+<style>
+    html, body {
+        min-height: 100vh;
+        padding-bottom: 80px;
+    }
+</style>
 <body>
     @yield('content')
 

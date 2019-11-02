@@ -1,4 +1,4 @@
-<footer class="bg-dark footer">
+<footer class="bg-dark footer fixed-bottom" style="height: 70px">
     <div class="container">
         <p class="m-0 text-center text-white">
           Copyright © ArqHub 2019

@@ -12,49 +12,54 @@ use Illuminate\Support\Facades\File;
 class ProjectController extends Controller {
 	private $project;
 	private $totalByPages = 15;
-	
+
 	public function __construct (Project $project) {
 		$this->project = $project;
 	}
-	
+
 	/**
 	 * Display a listing of the resource.
 	 * @return \Illuminate\Http\Response
 	 */
 	public function listar() {
 //		$projects = Project::paginate(1);
-		$projects = Project::with('project_image')->paginate($this->totalByPages);
+		$title = "Projetos";
+        $projects = Project::with('project_image')->paginate($this->totalByPages);
 		$param1 = null;
 		$param2 = null;
 		$param3 = null;
 		$param4 = null;
-		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4', 'title'));
 	}
 
 	public function oneParam($param1, $value1) {
+        $title = "Projetos";
 		$projects = Project::where([[$param1, '=', $value1]])->paginate($this->totalByPages);
 		$param2 = null;
 		$param3 = null;
 		$param4 = null;
-		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4','title'));
 	}
 
 	public function twoParam($param1, $value1, $param2, $value2) {
+        $title = "Projetos";
 		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->paginate($this->totalByPages);
 		$param3 = null;
 		$param4 = null;
-		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4', 'title'));
 	}
 
 	public function threeParam($param1, $value1, $param2, $value2, $param3, $value3) {
+        $title = "Projetos";
 		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3]])->paginate($this->totalByPages);
 		$param4 = null;
-		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4', 'title'));
 	}
 
 	public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4) {
+        $title = "Projetos";
 		$projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2], [$param3, '=', $value3], [$param4, '=', $value4]])->paginate($this->totalByPages);
-		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4'));
+		return view("project.index", compact('projects','param1', 'param2', 'param3', 'param4', 'title'));
 	}
 
 	public function detalhes ($id) {
@@ -64,12 +69,12 @@ class ProjectController extends Controller {
 
 	public function index () {
 		$title = "Meus Projetos";
-		
+
 		$projects = $this->project->where('user_id', '=', Auth::user()->id)->paginate($this->totalByPages);
-		
+
 		return view("project.list", compact('projects', 'title'));
 	}
-	
+
 	/**
 	 * Show the form for creating a new resource.
 	 * @return \Illuminate\Http\Response
@@ -77,10 +82,10 @@ class ProjectController extends Controller {
 	public function create () {
 		$title = "Novo projeto";
 		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
-		
+
 		return view("project.create", compact('title', 'categories'));
 	}
-	
+
 	/**
 	 * Store a newly created resource in storage.
 	 * @param \Illuminate\Http\Request $request
@@ -110,7 +115,7 @@ class ProjectController extends Controller {
 		$project->category = $dataForm['category'];
 		$project->user_id = Auth::user()->id;
 		$project->save();
-		
+
 //		$insert = $this->project->insert($dataForm);
 		// Salva as imagens
 		if($files = $request->file('images')){
@@ -124,10 +129,10 @@ class ProjectController extends Controller {
 				$projectImages->save();
 			}
 		}
-		
+
 		return redirect()->route("project.index");
 	}
-	
+
 	/**
 	 * Display the specified resource.
 	 * @param int $id
@@ -139,11 +144,11 @@ class ProjectController extends Controller {
 		$user = new User();
 		$userName = $user->find($project->user_id)->name;
 		$userEmail = $user->find($project->user_id)->email;
-		
+
 		$title = "Projeto " . $project->name;
 		return view("project.show", compact('project', 'title', 'userName', "userEmail", "images"));
 	}
-	
+
 	/**
 	 * Show the form for editing the specified resource.
 	 * @param int $id
@@ -152,16 +157,16 @@ class ProjectController extends Controller {
 	public function edit ($id) {
 		$project = $this->project->find($id);
 		$title = $project->name;
-		
+
 		if (Auth::user()->id != $project->user_id) {
 			return abort(404);
 		}
-		
+
 		$categories = ['tradicional', 'edicula', 'praia', 'campo'];
-		
+
 		return view("project.edit", compact('title', 'project', 'categories'));
 	}
-	
+
 	/**
 	 * Update the specified resource in storage.
 	 * @param \Illuminate\Http\Request $request
@@ -171,15 +176,15 @@ class ProjectController extends Controller {
 	public function update (Request $request, $id) {
 		$dataForm = $request->except(['_token']);
 		$project = $this->project->find($id);
-		
+
 		// Valida imagens
 		$this->validate($request, [
 			'images' => '',
 			'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
 		]);
-		
+
 		$update = $project->update($dataForm);
-		
+
 		// Se houverem novas imagens
 		if($files = $request->file('images')){
 			// Exclui as imagens antigas
@@ -204,10 +209,10 @@ class ProjectController extends Controller {
 				$projectImages->save();
 			}
 		}
-		
+
 		return redirect()->route("project.index");
 	}
-	
+
 	/**
 	 * Remove the specified resource from storage.
 	 * @param int $id
@@ -215,9 +220,9 @@ class ProjectController extends Controller {
 	 */
 	public function destroy ($id) {
 		$project = $this->project->find($id);
-		
+
 		$delete = $project->delete();
-		
+
 		if ($delete) {
 			return redirect()->route('project.index');
 		} else {

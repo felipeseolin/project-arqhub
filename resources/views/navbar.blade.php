@@ -17,6 +17,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('projects')}}">Projetos</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('users')}}">Projetistas</a>
+                </li>
                 {{--
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/userpage')}}">Portfólio</a>

@@ -52,8 +52,8 @@
                     <li>Suítes: {{$project->num_suites}}</li>
                     <li>Vagas de estacionamento: {{$project->num_parking}}</li>
                     <li>Pavimentos: {{$project->num_floors}}</li>
-                    <li>Tamanho: {{$project->width}} x {{$project->length}} m</li>
-                    <li>Área: {{$project->area}}</li>
+                    <li>Tamanho: {{$project->width}} x {{$project->length}} metros</li>
+                    <li>Área: {{$project->area}} m²</li>
                 </ul>
                 <p><a href="{{ url('user' . '/' . $project->user_id) }}">Ver outros projetos do mesmo
                         projetista</a></p>

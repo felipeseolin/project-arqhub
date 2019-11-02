@@ -13,94 +13,100 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
     private $totalByPages = 10;
 
-	public function edit () {
-		$title = "Editar Usuário";
-		$user = Auth::user();
+    public function edit()
+    {
+        $title = "Editar Usuário";
+        $user = Auth::user();
 
-		return view('user.edit', compact('title', 'user'));
-	}
+        return view('user.edit', compact('title', 'user'));
+    }
 
-	public function update (Request $request) {
-		//Desativar o usuário
-		if ($request->all()['active'] == false) {
-			return 'Seu usuário foi desativado';
-		}
-		$title = "Editar Usuário";
-		$name = null;
-		// Trata a imagem
-		$img = $request->file('picture');
-		if ($img) {
-			$this->validate($request,
-				[
-					'picture' => 'image|mimes:jpeg,png,jpg|max:2048'
-				]);
-			$name = time() . '-' . md5($img->getClientOriginalName()) . '.' . $img->getClientOriginalExtension();
-			$img->move(public_path('images/users'), $name);
-		}
-		// Recupera o item para editar
-		$user = new User();
-		$user = $user->find(Auth::user()->id);
-		$imgAntiga = $user->picture;
+    public function update(Request $request)
+    {
+        //Desativar o usuário
+        if ($request->all()['active'] == false) {
+            return 'Seu usuário foi desativado';
+        }
+        $title = "Editar Usuário";
+        $name = null;
+        // Trata a imagem
+        $img = $request->file('picture');
+        if ($img) {
+            $this->validate($request,
+                [
+                    'picture' => 'image|mimes:jpeg,png,jpg|max:2048'
+                ]);
+            $name = time() . '-' . md5($img->getClientOriginalName()) . '.' . $img->getClientOriginalExtension();
+            $img->move(public_path('images/users'), $name);
+        }
+        // Recupera o item para editar
+        $user = new User();
+        $user = $user->find(Auth::user()->id);
+        $imgAntiga = $user->picture;
 
-		$update = $user->update($request->all());
-		// Atualiza a foto
-		if ($update && $img) {
-			$update = $user->update(array('picture' => $name));
-			$imgPath = public_path('images/users/') . $imgAntiga;
-			if (File::exists($imgPath)) {
-				File::delete($imgPath);
-			}
-		}
+        $update = $user->update($request->all());
+        // Atualiza a foto
+        if ($update && $img) {
+            $update = $user->update(array('picture' => $name));
+            $imgPath = public_path('images/users/') . $imgAntiga;
+            if (File::exists($imgPath)) {
+                File::delete($imgPath);
+            }
+        }
 
-		return view('user.edit', compact('title', 'user', 'update'));
-	}
+        return view('user.edit', compact('title', 'user', 'update'));
+    }
 
-	public function show ($id) {
-		$user = new User();
-		$user = $user->find($id);
+    public function show($id)
+    {
+        $user = new User();
+        $user = $user->find($id);
 
-		if (!$user) {
-			return abort(404);
-		}
+        if (!$user) {
+            return abort(404);
+        }
 
-		$title = $user->name;
-
-
-		$projects = Project::with('project_image')->where("user_id", '=', $id)->get();
-
-		$projectsImgs = DB::table('project_images')->join('projects', 'projects.id', '=', 'project_images.proj_id')
-                                       ->where('user_id', '=', $id)->take(5)->get();
-
-		return view('user.user', compact('user', 'projects', 'title', 'projectsImgs'));
-	}
-
-	public function sendEmail (Request $request, $id) {
-		$user = new User();
-		$user = $user->find($id);
-		if (!$user) {
-			return abort(404);
-		}
-		$title = $user->name;
-
-		$dataForm = $request->all();
-		Mail::to($user->email)->send(new SendMail($dataForm));
-
-		$msg = 'E-mail enviado';
-		$response = true;
-
-		if (count(Mail::failures()) > 0) {
-			$response = false;
-			$msg = 'Ocorreu um ou mais erros e o email nao foi enviado';
-		}
+        $title = $user->name;
 
 
-		return view('user.info', compact('user', 'title', 'msg', 'response'));
-	}
+        $projects = Project::with('project_image')->where("user_id", '=', $id)->get();
 
-	public function listar() {
+        $projectsImgs = DB::table('project_images')->join('projects', 'projects.id', '=', 'project_images.proj_id')
+            ->where('user_id', '=', $id)->take(5)->get();
+
+        return view('user.user', compact('user', 'projects', 'title', 'projectsImgs'));
+    }
+
+    public function sendEmail(Request $request, $id)
+    {
+        $user = new User();
+        $user = $user->find($id);
+        if (!$user) {
+            return abort(404);
+        }
+        $title = $user->name;
+
+        $dataForm = $request->all();
+        Mail::to($user->email)->send(new SendMail($dataForm));
+
+        $msg = 'E-mail enviado';
+        $response = true;
+
+        if (count(Mail::failures()) > 0) {
+            $response = false;
+            $msg = 'Ocorreu um ou mais erros e o email nao foi enviado';
+        }
+
+
+        return view('user.info', compact('user', 'title', 'msg', 'response'));
+    }
+
+    public function listar()
+    {
         $title = "Projetistas";
         $users = User::with('project')->paginate($this->totalByPages);
         return view("user.list", compact('users', 'title'));

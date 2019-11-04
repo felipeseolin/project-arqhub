@@ -34,6 +34,12 @@
                 <!-- /.col-lg-3 -->
 
                 <div class="col-lg-9">
+                    @if(session('mailStatus'))
+                        <div class="alert alert-info">
+                            {{ session('mailStatus') }}
+                        </div>
+                    @endif
+
                     <div
                             id="carouselExampleIndicators"
                             class="carousel slide my-4"
@@ -121,8 +127,4 @@
 
     </div>
     @include('footer')
-
-
-
-
 @endsection

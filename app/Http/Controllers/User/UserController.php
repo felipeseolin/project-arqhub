@@ -88,21 +88,18 @@ class UserController extends Controller
         if (!$user) {
             return abort(404);
         }
-        $title = $user->name;
 
         $dataForm = $request->all();
+        $dataForm['email-to'] = $user->email;
+
         Mail::to($user->email)->send(new SendMail($dataForm));
 
-        $msg = 'E-mail enviado';
-        $response = true;
-
+        $mailStatus = 'E-mail enviado';
         if (count(Mail::failures()) > 0) {
-            $response = false;
-            $msg = 'Ocorreu um ou mais erros e o email nao foi enviado';
+            $mailStatus = 'Ocorreu um ou mais erros e o email nao foi enviado';
         }
 
-
-        return view('user.info', compact('user', 'title', 'msg', 'response'));
+        return redirect($request->path())->with('mailStatus', $mailStatus);
     }
 
     public function listar()

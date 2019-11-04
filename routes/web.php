@@ -23,6 +23,7 @@ Route::resource('/project', 'ProjectController')->middleware('auth');
 
 Route::get('/user/{id}', 'User\UserController@show');
 Route::get('/user', 'User\UserController@edit')->name('user')->middleware('auth');
+Route::post('/user/{id}', 'User\UserController@sendEmail')->name('send-email');
 
 Route::put('/user', 'User\UserController@update')->middleware('auth');
 

@@ -18,8 +18,8 @@
                         @for($i = 0; $i < count($images); $i++)
                             <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
                                 <img class="d-block img-fluid"
-                                     src="{{ url('/images') . '/' . $images[$i]->img_name }}"
-                                     alt="Imagem {{$i}}">
+                                    src="{{ url('/images') . '/' . $images[$i]->img_name }}"
+                                    alt="Imagem {{$i}}">
                             </div>
                         @endfor
                     </div>
@@ -43,7 +43,7 @@
                 @elseif($project->category == 'praia')
                     <strong>Casa de praia</strong>
                 @elseif($project->category == 'edicula')
-                    <strong>Edicula</strong>
+                    <strong>Edícula</strong>
                 @endif
                 <p>{{$project->description}}</p>
                 <ul>
@@ -64,24 +64,33 @@
         <hr/>
         <h3>Planta humanizada</h3>
         <img style="max-height: 400px; max-width: 900px"
-             class="mx-auto d-block" src="{{ url('/images') . '/' . $images[0]->img_name }}"
-             alt="Second slide">
+            class="mx-auto d-block" src="{{ url('/images') . '/' . $images[0]->img_name }}"
+            alt="Second slide">
         <hr/>
         <h2>Envie uma mensagem para o projetista</h2>
-        <form action="https://formspree.io/{{$userEmail}}" method="POST">
+        <form action="{{route('send-email', $project->user_id)}}" method="POST">
+            {!! csrf_field() !!}
             <div class="row">
                 <div class="col">
                     <label for="name">Nome</label>
-                    <input name="Nome" id="name" type="text" class="form-control">
+                    <input name="name" id="name" type="text" class="form-control" required>
                 </div>
                 <div class="col">
-                    <label for="name">Email</label>
-                    <input name="Email" id="email" type="email" class="form-control">
+                    <label for="email-from">E-mail para contato</label>
+                    <input name="email-from" id="email-from" type="email" class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
+                <label for="subject">Assunto</label>
+                <input id="subject" name="subject" class="form-control" maxlength="50" type="text" required/>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone para contato</label>
+                <input id="phone" name="phone" class="form-control" maxlength="50" type="text"/>
+            </div>
+            <div class="form-group">
                 <label for="exampleFormControlTextarea1">Mensagem</label>
-                <textarea name="Mensagem" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
             </div>
             <button value="Submit" type="submit" class="btn btn-secondary btn-block">Enviar</button>
         </form>

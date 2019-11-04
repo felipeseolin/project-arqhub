@@ -1,28 +1,27 @@
 @component('mail::message')
 # Nova mensagem
+
+Você possui uma nova mensagem:
 <br><br>
-## Informações
-<br><br>
-**Nome**
-<br>
+
+## Nome
 {{ $data['name'] }}
 
-**E-mail**
-<br>
-{{ $data['email'] }}
+## E-mail
+{{ $data['email-from'] }}
 
-**Assunto**
-<br>
+## Assunto
 {{ $data['subject'] }}
 
 @if(isset($data['phone']) && $data['phone'])
-**Telefone**
-<br>
+## Telefone
 {{ $data['phone'] }}
 @endif
 
-**Mensagem**
-<br>
+## Mensagem
 {{ $data['message'] }}
+
+<br><br>
+**Não responda essa mensagem**
 
 @endcomponent

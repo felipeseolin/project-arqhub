@@ -25,11 +25,21 @@ class UserController extends Controller
         return view('user.edit', compact('title', 'user'));
     }
 
+    public function disable()
+    {
+        return view('user.disable');
+    }
+
     public function update(Request $request)
     {
-        //Desativar o usuário
-        if ($request->all()['active'] == false) {
-            return 'Seu usuário foi desativado';
+        // Desativar o usuário
+        if (filter_var($request->all()['active'], FILTER_VALIDATE_BOOLEAN) == false) {
+            // Salva no banco
+            $user = new User();
+            $user = $user->find(Auth::user()->id);
+            $user->update(array('active' => false));
+            // Desloga o usuário
+            return redirect('login')->with(Auth::logout());
         }
         $title = "Editar Usuário";
         $name = null;

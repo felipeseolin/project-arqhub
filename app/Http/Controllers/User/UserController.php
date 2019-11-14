@@ -115,7 +115,7 @@ class UserController extends Controller
     public function listar()
     {
         $title = "Projetistas";
-        $users = User::with('project')->paginate($this->totalByPages);
+        $users = User::with('project')->where('active', true)->paginate($this->totalByPages);
         return view("user.list", compact('users', 'title'));
     }
 

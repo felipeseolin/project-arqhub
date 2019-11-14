@@ -15,6 +15,15 @@
                 {{ $msg }}
             </div>
         @endif
+
+        @if (isset($errors) && count($errors) > 0)
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <p>{{$error}}</p>
+                @endforeach
+            </div>
+        @endif
+
         <form action="{{route('project.update', $project->id)}}" method="POST" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}

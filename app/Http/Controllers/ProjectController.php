@@ -115,6 +115,8 @@ class ProjectController extends Controller
         $dataForm = $request->except(['_token', 'images', 'images.*']);
         // Adiciona o id do usuário autenticado como autor no projeto
         $dataForm["user_id"] = Auth::user()->id;
+        // Valida os dados da requisição
+        $this->validate($request, $this->project->rules, $this->project->messages);
         // Valida imagens
         $this->validate($request, [
             'images' => 'required',
@@ -199,7 +201,8 @@ class ProjectController extends Controller
     {
         $dataForm = $request->except(['_token']);
         $project = $this->project->find($id);
-
+        // Valida os dados da requisição
+        $this->validate($request, $this->project->rules, $this->project->messages);
         // Valida imagens
         $this->validate($request, [
             'images' => '',

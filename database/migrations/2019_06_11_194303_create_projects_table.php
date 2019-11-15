@@ -26,9 +26,11 @@ class CreateProjectsTable extends Migration
             $table->decimal('width');
             $table->decimal('length');
             $table->enum('category', ['tradicional', 'praia', 'campo', 'edicula']);
+            $table->string('cover', 150);
+            $table->string('humanized_plant', 150);
 	        $table->unsignedBigInteger('user_id');
             $table->timestamps();
-	
+
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

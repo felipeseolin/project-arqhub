@@ -41,9 +41,27 @@
             </div>
 
             <div class="form-group">
+                <label for="cover">Nova capa do projeto</label>
+                <input id="cover" name="cover" type="file" class="form-control">
+                <small>* Somente arquivos em png, jpg, jpeg ou svg. <br>
+                    * Quando a nova imagem for adicionada a antiga será apagada.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="humanized_plant">Nova planta humanizada</label>
+                <input id="humanized_plant" name="humanized_plant" type="file" class="form-control">
+                <small>* Somente arquivos em png, jpg, jpeg ou svg. <br>
+                    * Quando a nova imagem for adicionada a antiga será apagada.
+                </small>
+            </div>
+
+            <div class="form-group">
                 <label class="font-weight-bold" for="images">Novas Imagens</label>
                 <input name="images[]" class="form-control" type="file" multiple="multiple">
-                <p>* Quando novas imagens forem adicionadas as antigas serão apagadas.</p>
+                <small>* Somente arquivos em png, jpg, jpeg ou svg. <br>
+                    * Quando novas imagens forem adicionadas as antigas serão apagadas.
+                </small>
             </div>
 
 

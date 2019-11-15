@@ -274,10 +274,20 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
+        // Encontra o projeto
         $project = $this->project->find($id);
-
+        // Encontra as imagens do projeto
+        $projectImages = new ProjectImage();
+        $projectImages = $projectImages->where('proj_id', $project->id)->get();
+        foreach ($projectImages as $projectImage) {
+            // Apaga o arquivo
+            $path = public_path(). '\images\\' . $projectImage->img_name;
+            unlink($path);
+            // Apaga a instancia no banco
+            $projectImage->delete();
+        }
+        // Apaga o projeto
         $delete = $project->delete();
-
         if ($delete) {
             return redirect()->route('project.index');
         } else {

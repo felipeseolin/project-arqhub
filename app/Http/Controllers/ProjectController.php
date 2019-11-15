@@ -23,82 +23,51 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-    public function listar()
+    public function listar(Request $request)
     {
         $title = "Projetos";
+        $filters = $request->all();
         $activeUser = true;
+        $categories = Project::CATEGORIES;
         $projects = Project::whereHas('user', function ($query) use ($activeUser){
                 $query->where('active', $activeUser);
             })
-            ->paginate($this->totalByPages);
-        $param1 = null;
-        $param2 = null;
-        $param3 = null;
-        $param4 = null;
-        return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
-    }
-
-    public function oneParam($param1, $value1)
-    {
-        $title = "Projetos";
-        $activeUser = true;
-        $projects = Project::where([[$param1, '=', $value1]])
-            ->whereHas('user', function ($query) use ($activeUser){
-                $query->where('active', $activeUser);
+            ->where(function ($query) use ($request) {
+                // Filtrar por categoria
+                $category = $request->input('category');
+                if ($category) {
+                    $query->whereIn('category', $category);
+                }
+                // Filtrar por quantidade de quartos
+                $numBedrooms = intval($request->input('num_bedrooms'));
+                if ($numBedrooms) {
+                    if ($numBedrooms < 4) {
+                        $query->where('num_bedrooms', $numBedrooms);
+                    } else {
+                        $query->where('num_bedrooms', '>=', 4);
+                    }
+                }
+                // Filtrar por quantidade de banheiros
+                $numBathrooms = intval($request->input('num_bathrooms'));
+                if ($numBathrooms) {
+                    if ($numBathrooms < 4) {
+                        $query->where('num_bathrooms', $numBathrooms);
+                    } else {
+                        $query->where('num_bathrooms', '>=', 4);
+                    }
+                }
+                // Filtrar por quantidade de pisos
+                $numFloors = intval($request->input('num_floors'));
+                if ($numFloors) {
+                    if ($numFloors < 3) {
+                        $query->where('num_floors', $numFloors);
+                    } else {
+                        $query->where('num_floors', '>=', 4);
+                    }
+                }
             })
             ->paginate($this->totalByPages);
-        $param2 = null;
-        $param3 = null;
-        $param4 = null;
-        return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
-    }
-
-    public function twoParam($param1, $value1, $param2, $value2)
-    {
-        $title = "Projetos";
-        $activeUser = true;
-        $projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])
-            ->whereHas('user', function ($query) use ($activeUser){
-                $query->where('active', $activeUser);
-            })
-            ->paginate($this->totalByPages);
-        $param3 = null;
-        $param4 = null;
-        return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
-    }
-
-    public function threeParam($param1, $value1, $param2, $value2, $param3, $value3)
-    {
-        $title = "Projetos";
-        $activeUser = true;
-        $projects = Project::where([
-                [$param1, '=', $value1],
-                [$param2, '=', $value2],
-                [$param3, '=', $value3]
-            ])
-            ->whereHas('user', function ($query) use ($activeUser){
-                $query->where('active', $activeUser);
-            })
-            ->paginate($this->totalByPages);
-        $param4 = null;
-        return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
-    }
-
-    public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4)
-    {
-        $title = "Projetos";
-        $activeUser = true;
-        $projects = Project::where([
-                [$param1, '=', $value1],
-                [$param2, '=', $value2],
-                [$param3, '=', $value3],
-                [$param4, '=', $value4]
-            ])
-            ->whereHas('user', function ($query) use ($activeUser){
-                $query->where('active', $activeUser);
-            })
-            ->paginate($this->totalByPages);
-        return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
+        return view("project.index", compact('projects', 'title', 'categories', 'filters'));
     }
 
     public function detalhes($id)

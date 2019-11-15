@@ -170,7 +170,6 @@
                 </div>
             </div>
             <!-- Page Features -->
-            <hr/>
             <div class="row text-center">
                 @foreach($projects as $project)
                     <div class="col-lg-3 col-md-6 mb-4">

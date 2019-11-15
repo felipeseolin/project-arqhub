@@ -25,9 +25,13 @@ class ProjectController extends Controller
      */
     public function listar()
     {
-//		$projects = Project::paginate(1);
         $title = "Projetos";
-        $projects = Project::with('project_image')->paginate($this->totalByPages);
+        $activeUser = true;
+        $projects = Project::with('project_image')
+            ->whereHas('user', function ($query) use ($activeUser){
+                $query->where('active', $activeUser);
+            })
+            ->paginate($this->totalByPages);
         $param1 = null;
         $param2 = null;
         $param3 = null;
@@ -38,7 +42,13 @@ class ProjectController extends Controller
     public function oneParam($param1, $value1)
     {
         $title = "Projetos";
-        $projects = Project::where([[$param1, '=', $value1]])->paginate($this->totalByPages);
+        $activeUser = true;
+        $projects = Project::with('project_image')
+            ->where([[$param1, '=', $value1]])
+            ->whereHas('user', function ($query) use ($activeUser){
+                $query->where('active', $activeUser);
+            })
+            ->paginate($this->totalByPages);
         $param2 = null;
         $param3 = null;
         $param4 = null;
@@ -48,7 +58,13 @@ class ProjectController extends Controller
     public function twoParam($param1, $value1, $param2, $value2)
     {
         $title = "Projetos";
-        $projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])->paginate($this->totalByPages);
+        $activeUser = true;
+        $projects = Project::with('project_image')
+            ->where([[$param1, '=', $value1], [$param2, '=', $value2]])
+            ->whereHas('user', function ($query) use ($activeUser){
+                $query->where('active', $activeUser);
+            })
+            ->paginate($this->totalByPages);
         $param3 = null;
         $param4 = null;
         return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
@@ -57,11 +73,17 @@ class ProjectController extends Controller
     public function threeParam($param1, $value1, $param2, $value2, $param3, $value3)
     {
         $title = "Projetos";
-        $projects = Project::where([
-            [$param1, '=', $value1],
-            [$param2, '=', $value2],
-            [$param3, '=', $value3]
-        ])->paginate($this->totalByPages);
+        $activeUser = true;
+        $projects = Project::with('project_image')
+            ->where([
+                [$param1, '=', $value1],
+                [$param2, '=', $value2],
+                [$param3, '=', $value3]
+            ])
+            ->whereHas('user', function ($query) use ($activeUser){
+                $query->where('active', $activeUser);
+            })
+            ->paginate($this->totalByPages);
         $param4 = null;
         return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
     }
@@ -69,12 +91,18 @@ class ProjectController extends Controller
     public function fourParam($param1, $value1, $param2, $value2, $param3, $value3, $param4, $value4)
     {
         $title = "Projetos";
-        $projects = Project::where([
-            [$param1, '=', $value1],
-            [$param2, '=', $value2],
-            [$param3, '=', $value3],
-            [$param4, '=', $value4]
-        ])->paginate($this->totalByPages);
+        $activeUser = true;
+        $projects = Project::with('project_image')
+            ->where([
+                [$param1, '=', $value1],
+                [$param2, '=', $value2],
+                [$param3, '=', $value3],
+                [$param4, '=', $value4]
+            ])
+            ->whereHas('user', function ($query) use ($activeUser){
+                $query->where('active', $activeUser);
+            })
+            ->paginate($this->totalByPages);
         return view("project.index", compact('projects', 'param1', 'param2', 'param3', 'param4', 'title'));
     }
 

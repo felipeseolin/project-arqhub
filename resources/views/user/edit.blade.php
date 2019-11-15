@@ -76,13 +76,9 @@
 
                 </form>
 
-                <form action="" class="form" method="POST">
-                    {!! csrf_field() !!}
-                    {!! method_field('PUT') !!}
-                    <input id="active" name="active" value="false" type="hidden">
-                    <button class="btn btn-danger" type="submit">Desativar a minha conta</button>
-                </form>
+                <a href="{{url('/disableUser')}}" class="btn btn-danger">Desativar a minha conta</a>
 
             </div>
+        </div>
     </section>
 @endsection

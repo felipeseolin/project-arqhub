@@ -13,10 +13,6 @@
 
 Route::get('/projects', 'ProjectController@listar');
 Route::get('/project/id/{id}', 'ProjectController@show');
-Route::get('/projects/{param1}-{value1}', 'ProjectController@oneParam');
-Route::get('/projects/{param1}-{value1}/{param2}-{value2}', 'ProjectController@twoParam');
-Route::get('/projects/{param1}-{value1}/{param2}-{value2}/{param3}-{value3}', 'ProjectController@threeParam');
-Route::get('/projects/{param1}-{value1}/{param2}-{value2}/{param3}-{value3}/{param4}-{value4}', 'ProjectController@fourParam');
 Route::get('/users', 'User\UserController@listar');
 
 Route::resource('/project', 'ProjectController')->middleware('auth');

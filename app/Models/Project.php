@@ -73,6 +73,13 @@ class Project extends Model
         'category.required' => 'O campo categoria é de preenchimento obrigatório.'
     ];
 
+    const CATEGORIES = [
+        'tradicional' => 'Tradicional',
+        'edicula' => 'Edícula',
+        'praia' => 'Praia',
+        'campo' => 'Campo'
+    ];
+
     public function project_image() {
     	return $this->hasMany(ProjectImage::class, 'proj_id', 'id');
     }

@@ -80,6 +80,18 @@
             </div>
 
             <div class="form-group">
+                <label for="cover">Capa do projeto</label>
+                <input id="cover" name="cover" type="file" class="form-control" required>
+                <p>* Somente arquivos em png, jpg, jpeg ou svg.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="humanized_plant">Planta humanizada</label>
+                <input id="humanized_plant" name="humanized_plant" type="file" class="form-control" required>
+                <p>* Somente arquivos em png, jpg, jpeg ou svg.</p>
+            </div>
+
+            <div class="form-group">
                 <label for="images">Imagens do projeto</label>
                 <input name="images[]" class="form-control" type="file" multiple="multiple" required>
                 <p>* Somente arquivos em png, jpg, jpeg ou svg. <br> * Selecione múltiplos arquivos.</p>

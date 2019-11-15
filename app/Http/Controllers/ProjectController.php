@@ -27,8 +27,7 @@ class ProjectController extends Controller
     {
         $title = "Projetos";
         $activeUser = true;
-        $projects = Project::with('project_image')
-            ->whereHas('user', function ($query) use ($activeUser){
+        $projects = Project::whereHas('user', function ($query) use ($activeUser){
                 $query->where('active', $activeUser);
             })
             ->paginate($this->totalByPages);
@@ -43,8 +42,7 @@ class ProjectController extends Controller
     {
         $title = "Projetos";
         $activeUser = true;
-        $projects = Project::with('project_image')
-            ->where([[$param1, '=', $value1]])
+        $projects = Project::where([[$param1, '=', $value1]])
             ->whereHas('user', function ($query) use ($activeUser){
                 $query->where('active', $activeUser);
             })
@@ -59,8 +57,7 @@ class ProjectController extends Controller
     {
         $title = "Projetos";
         $activeUser = true;
-        $projects = Project::with('project_image')
-            ->where([[$param1, '=', $value1], [$param2, '=', $value2]])
+        $projects = Project::where([[$param1, '=', $value1], [$param2, '=', $value2]])
             ->whereHas('user', function ($query) use ($activeUser){
                 $query->where('active', $activeUser);
             })
@@ -74,8 +71,7 @@ class ProjectController extends Controller
     {
         $title = "Projetos";
         $activeUser = true;
-        $projects = Project::with('project_image')
-            ->where([
+        $projects = Project::where([
                 [$param1, '=', $value1],
                 [$param2, '=', $value2],
                 [$param3, '=', $value3]
@@ -92,8 +88,7 @@ class ProjectController extends Controller
     {
         $title = "Projetos";
         $activeUser = true;
-        $projects = Project::with('project_image')
-            ->where([
+        $projects = Project::where([
                 [$param1, '=', $value1],
                 [$param2, '=', $value2],
                 [$param3, '=', $value3],
@@ -148,8 +143,33 @@ class ProjectController extends Controller
         // Valida imagens
         $this->validate($request, [
             'images' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'cover' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'humanized_plant' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048'
+        ], [
+            'images.required' => 'É obrigatório anexar ao menos uma imagem para o projeto.',
+            'images.image' => 'O arquivo inserido deve ser uma imagem.',
+            'images.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg.',
+            'images.max' => 'A imagem deve ter no máxio 2048 KB',
+            'cover.required' => 'É obrigatório inserir uma imagem para a capa',
+            'cover.image' => 'O arquivo de capa do projeto deve ser uma imagem',
+            'cover.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg',
+            'cover.max' => 'A imagem de capa deve ter no máxio 2048 KB',
+            'humanized_plant.required' => 'É obrigatório inserir uma imagem para a planta humanizada',
+            'humanized_plant.image' => 'O arquivo de planta humanizada deve ser uma imagem',
+            'humanized_plant.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg',
+            'humanized_plant.max' => 'A imagem de planta humanizada deve ter no máxio 2048 KB'
         ]);
+        // Salva a capa do projeto
+        if ($coverImage = $request->file('cover')) {
+            $coverImageName = time() . '.' . md5($coverImage->getClientOriginalName()) . '.' . $coverImage->getClientOriginalExtension();
+            $coverImage->move(public_path('images'), $coverImageName);
+        }
+        // Salva a planta humanizada
+        if ($humanizedPlant = $request->file('humanized_plant')) {
+            $humanizedPlantName = time() . '.' . md5($humanizedPlant->getClientOriginalName()) . '.' . $humanizedPlant->getClientOriginalExtension();
+            $humanizedPlant->move(public_path('images'), $humanizedPlantName);
+        }
         // Insere os dados de projeto no banco de dados
         $project = new Project();
         $project->name = $dataForm['name'];
@@ -163,10 +183,11 @@ class ProjectController extends Controller
         $project->width = $dataForm['width'];
         $project->length = $dataForm['length'];
         $project->category = $dataForm['category'];
+        $project->cover = $coverImageName;
+        $project->humanized_plant = $humanizedPlantName;
         $project->user_id = Auth::user()->id;
         $project->save();
 
-//		$insert = $this->project->insert($dataForm);
         // Salva as imagens
         if ($files = $request->file('images')) {
             foreach ($files as $file) {
@@ -234,9 +255,47 @@ class ProjectController extends Controller
         // Valida imagens
         $this->validate($request, [
             'images' => '',
-            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'cover' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'humanized_plant' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+        ], [
+            'images.image' => 'O arquivo inserido deve ser uma imagem.',
+            'images.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg.',
+            'images.max' => 'A imagem deve ter no máxio 2048 KB',
+            'cover.image' => 'O arquivo de capa do projeto deve ser uma imagem',
+            'cover.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg',
+            'cover.max' => 'A imagem de capa deve ter no máxio 2048 KB',
+            'humanized_plant.image' => 'O arquivo de planta humanizada deve ser uma imagem',
+            'humanized_plant.mimes' => 'O arquivo deve seguir ser do formado png, jpg, jpeg ou svg',
+            'humanized_plant.max' => 'A imagem de planta humanizada deve ter no máxio 2048 KB'
         ]);
 
+        // Verifica se há uma nova capa para o projeto
+        if ($coverImage = $request->file('cover')) {
+            // Exclui a antiga imagem
+            $imgPath = public_path('images/') . $project->cover;
+            if (File::exists($imgPath)) {
+                File::delete($imgPath);
+            }
+            // Salva a nova imagem
+            $coverImageName = time() . '.' . md5($coverImage->getClientOriginalName()) . '.' . $coverImage->getClientOriginalExtension();
+            $coverImage->move(public_path('images'), $coverImageName);
+            $dataForm['cover'] = $coverImageName;
+        }
+        // Verifica se há uma nova planta humanizada para o projeto
+        if ($humanizedPlant = $request->file('humanized_plant')) {
+            // Exclui a antiga imagem
+            $imgPath = public_path('images/') . $project->humanized_plant;
+            if (File::exists($imgPath)) {
+                File::delete($imgPath);
+            }
+            // Salva a nova imagem
+            $humanizedPlantName = time() . '.' . md5($humanizedPlant->getClientOriginalName()) . '.' . $humanizedPlant->getClientOriginalExtension();
+            $humanizedPlant->move(public_path('images'), $humanizedPlantName);
+            $dataForm['humanized_plant'] = $humanizedPlantName;
+        }
+
+        // Atualiza o projeto
         $update = $project->update($dataForm);
 
         // Se houverem novas imagens

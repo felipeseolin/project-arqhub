@@ -105,7 +105,8 @@
                         <div class="card h-100">
                             <img
                                     class="card-img-top"
-                                    src="{{ url('/images') . '/' . $project->project_image[0]->img_name }}"
+                                    src="{{ url('/images') . '/' . $project->cover }}"
+                                    style="max-height: 500px; max-width: 500px"
                                     alt="Imagem do projeto"
                             />
                             <div class="card-body">

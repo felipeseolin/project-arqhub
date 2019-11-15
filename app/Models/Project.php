@@ -21,6 +21,8 @@ class Project extends Model
 	    'width',
 	    'length',
 	    'category',
+        'cover',
+        'humanized_plant',
 	    'user_id'
     ];
 

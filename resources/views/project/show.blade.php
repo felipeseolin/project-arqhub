@@ -7,30 +7,10 @@
         <!-- Heading Row -->
         <div class="row align-items-center my-5">
             <div class="col-lg-7">
-                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        @for($i = 0; $i < count($images); $i++)
-                            <li data-target="#carouselExampleIndicators" data-slide-to="{{$i}}"
-                                class="{{ $i == 0 ? 'active' : '' }}"></li>
-                        @endfor
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        @for($i = 0; $i < count($images); $i++)
-                            <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
-                                <img class="d-block img-fluid"
-                                    src="{{ url('/images') . '/' . $images[$i]->img_name }}"
-                                    alt="Imagem {{$i}}">
-                            </div>
-                        @endfor
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                <div class="col-12">
+                    <img style="max-height: 400px; max-width: 600px"
+                        class="mx-auto d-block" src="{{ url('/images') . '/' . $project->cover }}"
+                        alt="Imagem de capa">
                 </div>
             </div>
             <!-- /.col-lg-8 -->
@@ -64,8 +44,41 @@
         <hr/>
         <h3>Planta humanizada</h3>
         <img style="max-height: 400px; max-width: 900px"
-            class="mx-auto d-block" src="{{ url('/images') . '/' . $images[0]->img_name }}"
-            alt="Second slide">
+            class="mx-auto d-block" src="{{ url('/images') . '/' . $project->humanized_plant }}"
+            alt="Planta humanizada do projeto">
+        <hr/>
+        <!-- Outras imagens-->
+        <hr/>
+        <h3>Galeria de Imagens</h3>
+        <div class="row align-items-center my-5">
+        <div class="col-lg-12">
+            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @for($i = 0; $i < count($images); $i++)
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{$i}}"
+                            class="{{ $i == 0 ? 'active' : '' }}"></li>
+                    @endfor
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    @for($i = 0; $i < count($images); $i++)
+                        <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
+                            <img class="d-block img-fluid w-100"
+                                src="{{ url('/images') . '/' . $images[$i]->img_name }}"
+                                alt="Imagem {{$i}}">
+                        </div>
+                    @endfor
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        </div>
         <hr/>
         <h2>Envie uma mensagem para o projetista</h2>
         <form action="{{route('send-email', $project->user_id)}}" method="POST">

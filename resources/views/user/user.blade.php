@@ -89,16 +89,13 @@
 
                     <div class="row">
                         @foreach($projects as $project)
-                            @php
-                                $projImg =  $project->project_image[0]->img_name;
-                                $src =  url('/images') . '/' . $projImg;
-                            @endphp
                             <div class="col-lg-4 col-md-4 mb-4">
                                 <div class="card h-100">
                                     <img
-                                            class="card-img-top"
-                                            src="{{$src}}"
-                                            alt="Imagem do projeto"
+                                        class="card-img-top"
+                                        src="{{ url('/images') . '/' . $project->cover }}"
+                                        style="max-height: 500px; max-width: 500px"
+                                        alt="Imagem do projeto"
                                     />
                                     <div class="card-body">
                                         <h4 class="card-title">{{$project->name}}</h4>

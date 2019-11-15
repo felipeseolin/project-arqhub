@@ -82,7 +82,7 @@ class ProjectController extends Controller
                     } else {
                         $query->where('num_suites', '>=', 4);
                     }
-                } else if($numSuites == 0) {
+                } else if($request->input('num_suites') && $numSuites == 0) {
                     $query->where('num_suites', '=', 0);
                 }
             })

@@ -62,8 +62,28 @@ class ProjectController extends Controller
                     if ($numFloors < 3) {
                         $query->where('num_floors', $numFloors);
                     } else {
-                        $query->where('num_floors', '>=', 4);
+                        $query->where('num_floors', '>=', 3);
                     }
+                }
+                // Filtrar por quantidade de vagas de estacionamento
+                $numParking = intval($request->input('num_parking'));
+                if ($numParking) {
+                    if ($numParking < 4) {
+                        $query->where('num_parking', $numParking);
+                    } else {
+                        $query->where('num_parking', '>=', 4);
+                    }
+                }
+                // Filtrar por quantidade de suites
+                $numSuites = intval($request->input('num_suites'));
+                if ($numSuites) {
+                    if ($numSuites < 4) {
+                        $query->where('num_suites', $numSuites);
+                    } else {
+                        $query->where('num_suites', '>=', 4);
+                    }
+                } else if($numSuites == 0) {
+                    $query->where('num_suites', '=', 0);
                 }
             })
             ->paginate($this->totalByPages);

@@ -159,6 +159,99 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <!-- Quantidade de vagas de estacionamento -->
+                                    <div class="form-group">
+                                        <p>Quantidade de vagas na garagem</p>
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {{-- 1 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_parking']) ? $filters['num_parking'] == 1 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_parking" id="1" value="1"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_parking']) && $filters['num_parking'] == 1) ? 'checked' : '' !!}
+                                                > 1
+                                            </label>
+                                            {{-- 2 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_parking']) ? $filters['num_parking'] == 2 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_parking" id="2" value="2"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_parking']) && $filters['num_parking'] == 2) ? 'checked' : '' !!}
+                                                > 2
+                                            </label>
+                                            {{-- 3 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_parking']) ? $filters['num_parking'] == 3 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_parking" id="3" value="3"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_parking']) && $filters['num_parking'] == 3) ? 'checked' : '' !!}
+                                                > 3
+                                            </label>
+                                            {{-- 4 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_parking']) ? $filters['num_parking'] == 4 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_parking" id="+4" value="4"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_parking']) && $filters['num_parking'] == 4) ? 'checked' : '' !!}
+                                                > +4
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Quantidade de suítes -->
+                                    <div class="form-group">
+                                        <p>Quantidade de suítes</p>
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {{-- 0 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_suites']) ? $filters['num_suites'] == 0 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_suites" id="0" value="0"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_suites']) && $filters['num_suites'] == 0) ? 'checked' : '' !!}
+                                                > 0
+                                            </label>
+                                            {{-- 1 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_suites']) ? $filters['num_suites'] == 1 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_suites" id="1" value="1"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_suites']) && $filters['num_suites'] == 1) ? 'checked' : '' !!}
+                                                > 1
+                                            </label>
+                                            {{-- 2 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_suites']) ? $filters['num_suites'] == 2 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_suites" id="2" value="2"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_suites']) && $filters['num_suites'] == 2) ? 'checked' : '' !!}
+                                                > 2
+                                            </label>
+                                            {{-- 3 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_suites']) ? $filters['num_suites'] == 3 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_suites" id="3" value="3"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_suites']) && $filters['num_suites'] == 3) ? 'checked' : '' !!}
+                                                > 3
+                                            </label>
+                                            {{-- 4 --}}
+                                            <label class="btn btn-primary
+                                        {!! isset($filters['num_suites']) ? $filters['num_suites'] == 4 ? 'active' : '' : '' !!}"
+                                            >
+                                                <input type="radio" name="num_suites" id="+4" value="4"
+                                                    autocomplete="off"
+                                                    {!! (isset($filters['num_suites']) && $filters['num_suites'] == 4) ? 'checked' : '' !!}
+                                                > +4
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <a href="{{url('/projects')}}" class="btn btn-secondary">Limpar filtros</a>

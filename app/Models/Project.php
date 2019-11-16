@@ -74,10 +74,12 @@ class Project extends Model
     ];
 
     const CATEGORIES = [
-        'tradicional' => 'Tradicional',
+        'apartamento' => 'Apartamento',
+        'campo' => 'Casa de Campo',
+        'praia' => 'Casa de Praia',
+        'tradicional' => 'Casa Tradicional',
         'edicula' => 'Edícula',
-        'praia' => 'Praia',
-        'campo' => 'Campo'
+        'sala-comercial' => 'Sala Comercial'
     ];
 
     public function project_image() {
@@ -87,4 +89,8 @@ class Project extends Model
 	public function user() {
 		return $this->belongsTo(User::class, 'user_id', 'id');
 	}
+
+	public function getCategoryName() {
+         return self::CATEGORIES[$this->category];
+    }
 }

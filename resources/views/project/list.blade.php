@@ -42,7 +42,7 @@
                         <td>{{$project->num_floors}}</td>
                         <td>{{$project->num_parking}} vaga(s)</td>
                         <td>{{$project->num_suites}}</td>
-                        <td>{{$project->category}}</td>
+                        <td>{{$project->getCategoryName()}}</td>
                     </tr>
 
 

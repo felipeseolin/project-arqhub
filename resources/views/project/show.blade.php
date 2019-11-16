@@ -16,15 +16,7 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
                 <h1 class="font-weight-light">{{$project->name}}</h1>
-                @if($project->category == 'tradicional')
-                    <strong>Casa tradicional</strong>
-                @elseif($project->category == 'campo')
-                    <strong>Casa de campo</strong>
-                @elseif($project->category == 'praia')
-                    <strong>Casa de praia</strong>
-                @elseif($project->category == 'edicula')
-                    <strong>Edícula</strong>
-                @endif
+                <strong>{{ $project->getCategoryName() }}</strong>
                 <p>{{$project->description}}</p>
                 <ul>
                     <li>Quartos: {{$project->num_bedrooms}}</li>

@@ -82,7 +82,7 @@ class ProjectController extends Controller
                     } else {
                         $query->where('num_suites', '>=', 4);
                     }
-                } else if($numSuites == 0) {
+                } else if($request->input('num_suites') && $numSuites == 0) {
                     $query->where('num_suites', '=', 0);
                 }
             })
@@ -112,7 +112,7 @@ class ProjectController extends Controller
     public function create()
     {
         $title = "Novo projeto";
-        $categories = ['tradicional', 'edicula', 'praia', 'campo'];
+        $categories = Project::CATEGORIES;
 
         return view("project.create", compact('title', 'categories'));
     }
@@ -224,7 +224,7 @@ class ProjectController extends Controller
             return abort(404);
         }
 
-        $categories = ['tradicional', 'edicula', 'praia', 'campo'];
+        $categories = Project::CATEGORIES;
 
         return view("project.edit", compact('title', 'project', 'categories'));
     }

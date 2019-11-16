@@ -25,7 +25,7 @@ class CreateProjectsTable extends Migration
             $table->integer('num_suites');
             $table->decimal('width');
             $table->decimal('length');
-            $table->enum('category', ['tradicional', 'praia', 'campo', 'edicula']);
+            $table->enum('category', ['tradicional', 'praia', 'campo', 'edicula', 'apartamento', 'sala-comercial']);
             $table->string('cover', 150);
             $table->string('humanized_plant', 150);
 	        $table->unsignedBigInteger('user_id');

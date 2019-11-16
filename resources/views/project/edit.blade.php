@@ -144,9 +144,9 @@
                     <label class="font-weight-bold col-sm-4 col-form-label" for="category">Categoria</label>
                     <div class="col-sm-8">
                         <select id="category" name="category" class="form-control" required>
-                            @foreach($categories as $category)
-                                <option id="{{$category}}" name="{{$category}}" value="{{ $category }}"
-                                    {{ $category == $project->category ? "selected" : "" }}
+                            @foreach($categories as $categoryValue => $category)
+                                <option id="{{$categoryValue}}" name="{{$categoryValue}}" value="{{ $categoryValue }}"
+                                    {{ $categoryValue == $project->category ? "selected" : "" }}
                                 >{{ $category }}</option>
                             @endforeach
                         </select>

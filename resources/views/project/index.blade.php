@@ -280,7 +280,7 @@
                                     Quartos: {{$project->num_bedrooms}}<br>
                                     Banheiros: {{$project->num_bathrooms}}<br>
                                     Vagas na garagem: {{$project->num_parking}}<br>
-                                    Categoria: {{$project->category}}<br>
+                                    Categoria: {{$project->getCategoryName()}}<br>
                                 </p>
                             </div>
                             <div class="card-footer">
